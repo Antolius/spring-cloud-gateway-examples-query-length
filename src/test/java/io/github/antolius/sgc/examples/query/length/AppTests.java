@@ -13,8 +13,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWireMock(port = 0)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT,
-        properties = {"backend.url=http://localhost:${wiremock.server.port}"})
+@SpringBootTest(
+        webEnvironment = WebEnvironment.RANDOM_PORT,
+        properties = {"backend.url=http://localhost:${wiremock.server.port}"},
+        classes = {TestConfig.class}
+)
 public class AppTests {
 
     @Autowired
