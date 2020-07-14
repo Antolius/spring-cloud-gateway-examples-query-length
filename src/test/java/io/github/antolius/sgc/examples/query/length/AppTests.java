@@ -34,4 +34,20 @@ public class AppTests {
         actual.expectStatus().isOk();
     }
 
+    @Test
+    void shouldSupportLongQueryParameters() {
+        // given
+        var givenQueryParamLength = 10_000;
+        var givenQueryParam = new String(new char[givenQueryParamLength]).replaceAll("\0", "a");
+        stubFor(get(urlEqualTo("/foo/bars?q=" + givenQueryParam))
+                .willReturn(aResponse().withStatus(200))
+        );
+
+        // when
+        var actual = client.get().uri("/foo/bars?q=" + givenQueryParam).exchange();
+
+        // then
+        actual.expectStatus().isOk();
+    }
+
 }
